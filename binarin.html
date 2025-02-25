@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binarin</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .input-container input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .input-container button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .input-container button:hover {
+            background-color: #6c006c;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        #miBoton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            background-color: #800080;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        /* Asegúrate de que la imagen se adapte al contenedor con las proporciones correctas */
+img {
+    width: 40%; /* Ajusta el ancho al 100% del contenedor (puedes cambiarlo al valor que desees) */
+    height: auto; /* Mantiene la proporción original de la imagen o gif */
+    max-width: 250px; /* Limita el ancho máximo, puedes ajustarlo a tu preferencia */
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Binarin - Respuestas y Números</h1>
+    </header>
+    <main>
+        <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+
+        <!-- Modo Sí/No -->
+        <div class="input-container">
+            <input type="text" id="questionInput" placeholder="Escribe tu pregunta aquí...">
+            <button id="yesNoButton" onclick="respuestaBinaria()">¿Sí o No?</button>
+            <div id="yesNoResult" class="result"></div>
+        </div>
+        
+
+        <!-- Modo Número Aleatorio -->
+        <div class="input-container">
+            <input type="number" id="rangeInput" placeholder="Ingresa un número máximo" min="1">
+            <button id="randomButton" onclick="numeroAleatorio()">Generar Número</button>
+            <div id="randomResult" class="result"></div>
+        </div>
+        <div>
+        <img src="binarin.gif" alt="BINARIN">
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Binarin</p>
+    </footer>
+    <script>
+        // Función para generar respuesta aleatoria Sí/No
+        function respuestaBinaria() {
+            const resultDiv = document.getElementById("yesNoResult");
+            const respuestas = ["Sí", "No"];
+            const randomIndex = Math.floor(Math.random() * respuestas.length);
+            resultDiv.textContent = respuestas[randomIndex];
+        }
+
+        // Función para generar número aleatorio
+        function numeroAleatorio() {
+            const max = document.getElementById("rangeInput").value;
+            if (max < 1) {
+                alert("Por favor, ingresa un número mayor que 0.");
+                return;
+            }
+            const resultado = Math.floor(Math.random() * max) + 1;
+            const resultDiv = document.getElementById("randomResult");
+            resultDiv.textContent = "Número generado: " + resultado;
+        }
+
+        // Función para reproducir audio de inicio
+        function reproducirAudio() {
+            var audio = new Audio('salida.mp3');
+            audio.play();
+            audio.onended = function() {
+                window.location.href = 'index.html';
+            };
+        }
+    </script>
+</body>
+</html>

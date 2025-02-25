@@ -1,0 +1,21 @@
+{
+  "name": "Elena",
+  "short_name": "Elena",
+  "description": "Una asistente personal.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f4f4f9",
+  "theme_color": "#800080",
+  "icons": [
+    {
+      "src": "1.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "2.jpg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

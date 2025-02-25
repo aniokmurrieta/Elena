@@ -1,0 +1,24 @@
+ #miBoton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: #800080;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; /* para hacerlo cuadrado, ajusta el valor según sea necesario */
+}
+
+
+function reproducirAudio() {
+  var audio = new Audio('salida.mp3');
+  audio.play();
+  audio.onended = function() {
+    window.location.href = 'index.html';
+  };
+}
+
+<button id="miBoton" onclick="reproducirAudio()">Inicio</button>

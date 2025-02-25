@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideaselena</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .command-input {
+            margin-top: 20px;
+        }
+
+        .command-input input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        .command-input button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ideaselena</h1>
+    </header>
+    <main>
+        <div id="ideas-container">
+            <!-- Los párrafos con las ideas se agregarán aquí -->
+        </div>
+        <div class="command-input">
+            <input type="text" id="idea-input" placeholder="Ingresa una idea">
+            <button onclick="addIdea()">Añadir</button>
+        </div>
+        <a href="index.html">inicio</a>
+    </main>
+    <script>
+        // Obtener el contenedor de ideas
+        const ideasContainer = document.getElementById('ideas-container');
+
+        // Cargar ideas almacenadas en localStorage al cargar la página
+        window.onload = function() {
+            loadIdeas();
+        };
+
+        // Función para cargar las ideas almacenadas en localStorage
+        function loadIdeas() {
+            // Obtener las ideas almacenadas en localStorage
+            const storedIdeas = JSON.parse(localStorage.getItem('ideas'));
+
+            // Si hay ideas almacenadas, agregarlas al contenedor
+            if (storedIdeas) {
+                storedIdeas.forEach(idea => {
+                    addIdeaToContainer(idea);
+                });
+            }
+        }
+
+        // Función para agregar una idea al contenedor y almacenarla en localStorage
+        function addIdea() {
+            const ideaInput = document.getElementById('idea-input');
+            const ideaText = ideaInput.value.trim();
+
+            if (ideaText === '') {
+                alert('Por favor ingresa una idea.');
+                return;
+            }
+
+            // Agregar la idea al contenedor
+            addIdeaToContainer(ideaText);
+
+            // Guardar la idea en localStorage
+            saveIdea(ideaText);
+
+            // Limpiar el input
+            ideaInput.value = '';
+        }
+
+        // Función para agregar una idea al contenedor
+        function addIdeaToContainer(ideaText) {
+            const ideaElement = document.createElement('p');
+            ideaElement.textContent = ideaText;
+            ideasContainer.appendChild(ideaElement);
+        }
+
+        // Función para guardar una idea en localStorage
+        function saveIdea(ideaText) {
+            // Obtener las ideas almacenadas en localStorage
+            let storedIdeas = JSON.parse(localStorage.getItem('ideas')) || [];
+
+            // Agregar la nueva idea a la lista
+            storedIdeas.push(ideaText);
+
+            // Guardar la lista actualizada en localStorage
+            localStorage.setItem('ideas', JSON.stringify(storedIdeas));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .task-input, .reminder-input {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .task-input input, .reminder-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .task-input button, .reminder-input button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .task-list, .reminder-list {
+            width: 100%;
+            max-width: 400px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item, .reminder-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-item.completed {
+            text-decoration: line-through;
+            background-color: #e0ffe0;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #resetButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: #800080;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+         #miBoton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: #800080;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; /* para hacerlo cuadrado, ajusta el valor según sea necesario */
+}
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Organizator</h1>
+</header>
+
+<main>
+    <div class="task-input">
+        <input type="text" id="taskName" placeholder="Nombre de la tarea">
+        <button onclick="addTask()">Añadir Tarea</button>
+    </div>
+
+    <ul id="taskList" class="task-list"></ul>
+
+    <div class="reminder-input">
+        <input type="text" id="reminderName" placeholder="Nombre del recordatorio">
+        <input type="time" id="startTime" placeholder="Hora de inicio">
+        <input type="time" id="endTime" placeholder="Hora de fin">
+        <button onclick="addReminder()">Añadir Recordatorio</button>
+        <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+    </div>
+
+    <ul id="reminderList" class="reminder-list"></ul>
+
+    <button id="resetButton" onclick="resetData()">Reset</button>
+</main>
+
+<footer>
+    <p>&copy; 2024 Organizator</p>
+</footer>
+
+<script>
+    // Función para añadir tareas
+    function addTask() {
+        const taskName = document.getElementById('taskName').value;
+        if (taskName) {
+            const task = { name: taskName, completed: false };
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.push(task);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            document.getElementById('taskName').value = '';
+            renderTasks();
+        }
+    }
+
+    // Función para renderizar tareas
+    function renderTasks() {
+        const taskList = document.getElementById('taskList');
+        taskList.innerHTML = '';
+        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        tasks.forEach((task, index) => {
+            const taskItem = document.createElement('li');
+            taskItem.classList.add('task-item');
+            if (task.completed) taskItem.classList.add('completed');
+            taskItem.innerHTML = `
+                ${task.name}
+                <button onclick="toggleTask(${index})">${task.completed ? 'Desmarcar' : 'Marcar'}</button>
+            `;
+            taskList.appendChild(taskItem);
+        });
+    }
+
+    // Función para cambiar el estado de completado de una tarea
+    function toggleTask(index) {
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks[index].completed = !tasks[index].completed;
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        renderTasks();
+    }
+
+    // Función para añadir recordatorios
+    function addReminder() {
+        const reminderName = document.getElementById('reminderName').value;
+        const startTime = document.getElementById('startTime').value;
+        const endTime = document.getElementById('endTime').value;
+
+        if (reminderName && startTime && endTime) {
+            const reminder = { name: reminderName, start: startTime, end: endTime };
+            let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+            reminders.push(reminder);
+            localStorage.setItem('reminders', JSON.stringify(reminders));
+            document.getElementById('reminderName').value = '';
+            document.getElementById('startTime').value = '';
+            document.getElementById('endTime').value = '';
+            renderReminders();
+        }
+    }
+
+    // Función para renderizar recordatorios
+    function renderReminders() {
+        const reminderList = document.getElementById('reminderList');
+        reminderList.innerHTML = '';
+        const reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+
+        reminders.forEach((reminder) => {
+            const reminderItem = document.createElement('li');
+            reminderItem.classList.add('reminder-item');
+            reminderItem.textContent = `${reminder.name} - De ${reminder.start} a ${reminder.end}`;
+            reminderList.appendChild(reminderItem);
+        });
+    }
+
+    // Función para resetear datos específicos de esta página
+    function resetData() {
+        localStorage.removeItem('tasks');
+        localStorage.removeItem('reminders');
+        renderTasks();
+        renderReminders();
+    }
+    function reproducirAudio() {
+  var audio = new Audio('salida.mp3');
+  audio.play();
+  audio.onended = function() {
+    window.location.href = 'index.html';
+  };
+}
+
+    // Renderizar tareas y recordatorios al cargar la página
+    renderTasks();
+    renderReminders();
+</script>
+
+</body>
+</html>

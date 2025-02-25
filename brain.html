@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .command-input {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            gap: 10px;
+        }
+
+        .command-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .command-input button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+         #miBoton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: #800080;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; /* para hacerlo cuadrado, ajusta el valor según sea necesario */
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Brain - Notas</h1>
+    </header>
+    <main>
+        <div class="command-input">
+            <h2>Escribir Notas</h2>
+            <input type="text" id="titulo" placeholder="Título">
+            <textarea id="nota" placeholder="Nota"></textarea>
+            <button onclick="guardarNota()">Guardar</button>
+        </div>
+    </main>
+    <main>
+        <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+        <div class="command-input">
+            <h2>Ver Notas</h2>
+            <ul id="lista-notas"></ul>
+        </div>
+    </main>
+    <footer>
+        <p>© 2024 Brain</p>
+    </footer>
+
+    <script>
+        // Función para guardar una nota en el localStorage
+        function guardarNota() {
+            var titulo = document.getElementById('titulo').value;
+            var nota = document.getElementById('nota').value;
+
+            if (titulo && nota) {
+                var notas = JSON.parse(localStorage.getItem('notas')) || [];
+                notas.push({ titulo: titulo, nota: nota });
+                localStorage.setItem('notas', JSON.stringify(notas));
+                mostrarNotas();
+                // Limpiar los campos después de guardar
+                document.getElementById('titulo').value = '';
+                document.getElementById('nota').value = '';
+            } else {
+                alert('Por favor, completa el título y la nota.');
+            }
+        }
+
+        // Función para mostrar todas las notas almacenadas en el localStorage
+        function mostrarNotas() {
+            var listaNotas = document.getElementById('lista-notas');
+            listaNotas.innerHTML = '';
+            var notas = JSON.parse(localStorage.getItem('notas')) || [];
+            notas.forEach(function(nota, index) {
+                var listItem = document.createElement('li');
+                var link = document.createElement('a');
+                link.href = '#';
+                link.textContent = nota.titulo;
+                // Al hacer clic en el título de la nota, mostrar la nota completa
+                link.onclick = function() {
+                    alert(nota.nota);
+                };
+                listItem.appendChild(link);
+                listaNotas.appendChild(listItem);
+            });
+        }
+
+        // Al cargar la página, mostrar todas las notas almacenadas
+        mostrarNotas();
+        
+        function reproducirAudio() {
+  var audio = new Audio('salida.mp3');
+  audio.play();
+  audio.onended = function() {
+    window.location.href = 'index.html';
+  };
+}
+    </script>
+</body>
+</html>

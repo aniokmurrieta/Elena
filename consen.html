@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consen</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .command-input {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            gap: 10px;
+        }
+
+        .command-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .command-input button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+ #miBoton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: #800080;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; /* para hacerlo cuadrado, ajusta el valor según sea necesario */
+}
+       
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Consen - Conversor de Tiempo</h1>
+    </header>
+    <main>
+        <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+
+        <div class="command-input">
+            <input type="number" id="secondsInput" placeholder="Ingrese segundos...">
+            <button onclick="convertirTiempo()">Convertir</button>
+        </div>
+        <div id="result" style="margin-top: 20px;"></div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Consen</p>
+    </footer>
+    <script>
+        function convertirTiempo() {
+            var seconds = parseInt(document.getElementById("secondsInput").value);
+            var days = Math.floor(seconds / (3600 * 24));
+            seconds %= (3600 * 24);
+            var hours = Math.floor(seconds / 3600);
+            seconds %= 3600;
+            var minutes = Math.floor(seconds / 60);
+            seconds %= 60;
+
+            var resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `<p>${days} días, ${hours} horas, ${minutes} minutos, ${seconds} segundos</p>`;
+        }
+function reproducirAudio() {
+  var audio = new Audio('salida.mp3');
+  audio.play();
+  audio.onended = function() {
+    window.location.href = 'index.html';
+  };
+}
+        
+    </script>
+</body>
+</html>

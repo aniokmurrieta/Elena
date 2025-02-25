@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 0 10px;
+        }
+
+        .converter-input {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            gap: 10px;
+        }
+
+        .converter-input input, .converter-input textarea {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .converter-input button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #alphabetButton {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 30px;
+            height: 30px;
+            background-color: #800080;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        #miBoton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: #800080;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; /* para hacerlo cuadrado, ajusta el valor según sea necesario */
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Nexus: Convertidor de Lenguaje Secreto</h1>
+</header>
+
+<main>
+    <button id="alphabetButton" onclick="showAlphabet()">Abc</button>
+    <div class="converter-input">
+        <textarea id="textInput" placeholder="Escribe tu texto aquí..."></textarea>
+        <button onclick="convertText()">Convertir</button>
+        <button onclick="deconvertText()">Desconvertir</button>
+        <textarea id="textOutput" placeholder="Resultado..." readonly></textarea>
+        <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2024 Nexus</p>
+</footer>
+
+<script>
+    const alphabet = {
+        // Ejemplo de abecedario secreto (puedes personalizar esto)
+        'a': 'x', 'b': 'y', 'c': 'z', 'd': 'w', 'e': 'v',
+        'f': 'u', 'g': 't', 'h': 's', 'i': 'r', 'j': 'q',
+        'k': 'p', 'l': 'o', 'm': 'n', 'n': 'm', 'o': 'l',
+        'p': 'k', 'q': 'j', 'r': 'i', 's': 'h', 't': 'g',
+        'u': 'f', 'v': 'e', 'w': 'd', 'x': 'c', 'y': 'b',
+        'z': 'a'
+    };
+
+    const reverseAlphabet = Object.fromEntries(
+        Object.entries(alphabet).map(([key, value]) => [value, key])
+    );
+
+    function convertText() {
+        const input = document.getElementById('textInput').value.toLowerCase();
+        let output = '';
+
+        for (let char of input) {
+            output += alphabet[char] || char;
+        }
+
+        document.getElementById('textOutput').value = output;
+    }
+
+    function deconvertText() {
+        const input = document.getElementById('textInput').value.toLowerCase();
+        let output = '';
+
+        for (let char of input) {
+            output += reverseAlphabet[char] || char;
+        }
+
+        document.getElementById('textOutput').value = output;
+    }
+
+    function showAlphabet() {
+        alert("Abecedario Secreto:\n\n" + JSON.stringify(alphabet, null, 2));
+    }
+    
+    function reproducirAudio() {
+  var audio = new Audio('salida.mp3');
+  audio.play();
+  audio.onended = function() {
+    window.location.href = 'index.html';
+    }
+  };
+</script>
+
+</body>
+</html>

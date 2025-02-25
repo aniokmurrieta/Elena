@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastNotes</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .note-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            font-size: 16px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #6c006c;
+        }
+
+        .note {
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        #miBoton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            background-color: #800080;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>FastNotes - Notas Rápidas</h1>
+    </header>
+    <main>
+        <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+        <div class="note-container">
+            <textarea id="noteInput" placeholder="Escribe tu nota aquí..."></textarea>
+            <button onclick="agregarNota()">Agregar Nota</button>
+            <div id="notesList"></div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 FastNotes</p>
+    </footer>
+    <script>
+        function agregarNota() {
+            const noteInput = document.getElementById("noteInput");
+            const notesList = document.getElementById("notesList");
+            
+            if (noteInput.value.trim() === "") {
+                alert("Por favor, escribe algo antes de agregar una nota.");
+                return;
+            }
+
+            const note = document.createElement("div");
+            note.classList.add("note");
+            note.textContent = noteInput.value;
+            notesList.appendChild(note);
+            noteInput.value = ""; // Limpia el área de texto
+        }
+
+        // Función para reproducir audio y redirigir
+        function reproducirAudio() {
+            var audio = new Audio('salida.mp3');
+            audio.play();
+            audio.onended = function() {
+                window.location.href = 'index.html';
+            };
+        }
+    </script>
+</body>
+</html>

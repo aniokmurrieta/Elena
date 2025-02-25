@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgendaX</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 0 10px;
+        }
+
+        .command-input {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            gap: 10px;
+        }
+
+        .command-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .command-input button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .agenda-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr); /* 7 columnas para los días de la semana */
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .agenda-day {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .agenda-entry {
+            margin-bottom: 5px;
+        }
+         #miBoton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: #800080;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; /* para hacerlo cuadrado, ajusta el valor según sea necesario */
+}
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>AgendaX</h1>
+</header>
+
+<main>
+    <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+    <div class="command-input">
+        <input type="date" id="dateInput" placeholder="Fecha">
+        <input type="text" id="subjectInput" placeholder="Asunto">
+        <input type="time" id="timeInput" placeholder="Hora">
+        <button onclick="addToAgenda()">Registrar</button>
+    </div>
+    <div id="agendaDisplay" class="agenda-grid"></div>
+</main>
+
+<footer>
+    <p>&copy; 2024 AgendaX</p>
+</footer>
+
+<script>
+    function addToAgenda() {
+        var date = document.getElementById("dateInput").value;
+        var subject = document.getElementById("subjectInput").value;
+        var time = document.getElementById("timeInput").value;
+
+        var entry = {
+            date: date,
+            subject: subject,
+            time: time
+        };
+
+        // Guardar al Local Storage
+        var agenda = JSON.parse(localStorage.getItem("agenda")) || [];
+        agenda.push(entry);
+        localStorage.setItem("agenda", JSON.stringify(agenda));
+
+        // Llamar a la función para mostrar todos los registros
+        showAgendaEntries();
+    }
+
+    function showAgendaEntries() {
+        var agenda = JSON.parse(localStorage.getItem("agenda")) || [];
+        var agendaDisplay = document.getElementById("agendaDisplay");
+        agendaDisplay.innerHTML = "";
+
+        var days = {};
+
+        // Agrupar eventos por día
+        agenda.forEach(function(entry) {
+            var date = entry.date;
+            if (!days[date]) {
+                days[date] = [];
+            }
+            days[date].push(entry);
+        });
+
+        // Mostrar eventos en cuadritos por día
+        Object.keys(days).forEach(function(date) {
+            var dayDiv = document.createElement("div");
+            dayDiv.classList.add("agenda-day");
+            dayDiv.innerHTML = "<h3>" + date + "</h3>";
+            days[date].forEach(function(entry) {
+                var entryDiv = document.createElement("div");
+                entryDiv.classList.add("agenda-entry");
+                entryDiv.textContent = entry.time + " - " + entry.subject;
+                dayDiv.appendChild(entryDiv);
+            });
+            agendaDisplay.appendChild(dayDiv);
+        });
+    }
+
+    // Llamar a la función para mostrar todos los registros al cargar la página
+    showAgendaEntries();
+    
+    
+    
+    
+    function reproducirAudio() {
+  var audio = new Audio('salida.mp3');
+  audio.play();
+  audio.onended = function() {
+    window.location.href = 'index.html';
+  };
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genecuentos</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .command-input {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            gap: 10px;
+        }
+
+        .command-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .command-input button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+         #miBoton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: #800080;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; /* para hacerlo cuadrado, ajusta el valor según sea necesario */
+}   
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Genecuentos</h1>
+    </header>
+    <main>
+        <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+        <div id="modoSeleccion">
+            <button id="modoCuentosR" onclick="cargarCuentos('r')">Cuentos para la r</button>
+            <button id="modoCuentosDiccion" onclick="cargarCuentos('diccion')">Cuentos para mejorar la dicción</button>
+        </div>
+        <div id="contenedorCuentos"></div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Genecuentos</p>
+    </footer>
+    <script>
+        // Define una estructura de datos para almacenar los cuentos
+        const cuentos = {
+            'r': [
+                "Había una vez un ratón llamado Roberto que vivía en un rincón del bosque.",
+                "Rosa era una niña muy curiosa que siempre soñaba con viajar a lugares remotos.",
+                "Ramón encontró un tesoro escondido en el fondo del mar.",
+                
+ "Había una ratonera en el rincón del roble, donde Roberto, el ratón travieso, guardaba sus tesoros de queso. Un día, mientras buscaba algo para cenar, Roberto descubrió una carta misteriosa entre los restos de un orejón de maíz. La letra era difícil de descifrar, pero Roberto, con su habilidosa dicción, logró leerla. Decía: En la ribera del río, bajo el rosal, encontrarás el mayor tesoro jamás visto Con el corazón lleno de emoción y la mente llena de sueños, Roberto partió en busca del tesoro oculto.",        
+            ],
+            'diccion': [
+                "Pedro pronunciaba perfectamente palabras complicadas desde pequeño.",
+                "La profesora Patricia practicaba la pronunciación cada día para mejorar su dicción.",
+ "Alan, desde joven, mostraba una habilidad impresionante para superar obstáculos. Siempre tuvo claro que el éxito no se mide por la ausencia de fracasos, sino por la capacidad de levantarse después de caer. Aunque en su camino empresarial enfrentó desafíos y contratiempos, su determinación y creatividad lo llevaron a encontrar soluciones innovadoras. Alan pronunciaba con convicción las palabras del fracaso, convirtiéndolas en lecciones para su éxito futuro. Con cada tropiezo, aprendía y se reinventaba, hasta convertirse en un hombre admirado por su capacidad para convertir los desafíos en oportunidades de crecimiento.",          
+                
+            ],
+            
+        };
+
+        // Función para cargar los cuentos según el modo seleccionado
+        function cargarCuentos(modo) {
+            mostrarCuentos(cuentos[modo]);
+        }
+
+        // Función para mostrar los cuentos en el contenedor
+        function mostrarCuentos(cuentos) {
+            const contenedorCuentos = document.getElementById('contenedorCuentos');
+            contenedorCuentos.innerHTML = '';
+            cuentos.forEach(cuento => {
+                const parrafo = document.createElement('p');
+                parrafo.textContent = cuento;
+                contenedorCuentos.appendChild(parrafo);
+            });
+        }
+        
+    function reproducirAudio() {
+  var audio = new Audio('salida.mp3');
+  audio.play();
+  audio.onended = function() {
+    window.location.href = 'index.html';
+  };
+}    
+    </script>
+</body>
+</html>

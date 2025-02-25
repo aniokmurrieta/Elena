@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextLib</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .command-input {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            gap: 10px;
+        }
+
+        .command-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .command-input button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        #miBoton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            background-color: #800080;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Estilo del área de texto */
+        .text-container {
+            width: 100%;
+            max-width: 600px;
+            min-height: 200px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            background-color: #f4f4f9;
+            white-space: pre-wrap; /* Mantener el formato del texto original */
+            overflow-y: auto;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TextLib - Lectura de Archivos de Texto</h1>
+    </header>
+
+    <main>
+        <div class="command-input">
+            <input type="file" id="fileInput" accept=".txt" />
+            <button id="loadButton">Cargar Archivo</button>
+            <div class="text-container" id="textContainer">Por favor, cargue un archivo de texto para comenzar.</div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TextLib</p>
+    </footer>
+
+    <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+
+    <script>
+        document.getElementById('loadButton').addEventListener('click', function() {
+            const fileInput = document.getElementById('fileInput');
+            const textContainer = document.getElementById('textContainer');
+            
+            if (fileInput.files.length === 0) {
+                textContainer.textContent = 'Por favor, seleccione un archivo de texto primero.';
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const fileContent = event.target.result;
+                textContainer.textContent = fileContent; // Muestra el contenido del archivo
+            };
+
+            reader.onerror = function() {
+                textContainer.textContent = 'Hubo un error al leer el archivo.';
+            };
+
+            reader.readAsText(file);
+        });
+
+        // Función para reproducir el audio y redirigir
+        function reproducirAudio() {
+            var audio = new Audio('salida.mp3');
+            audio.play();
+            audio.onended = function() {
+                window.location.href = 'index.html';
+            };
+        }
+
+        // Botón de subir a la parte superior
+        document.getElementById('miBoton').addEventListener('click', function() {
+            window.scrollTo(0, 0);
+        });
+    </script>
+</body>
+</html>

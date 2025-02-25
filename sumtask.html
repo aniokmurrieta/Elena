@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumtask</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .command-input {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            gap: 10px;
+        }
+
+        .command-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .command-input button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #item-list {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #item-list li {
+            margin-bottom: 5px;
+        }
+        
+        #miBoton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: #800080;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; /* para hacerlo cuadrado, ajusta el valor según sea necesario */
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sumtask</h1>
+    </header>
+    <main>
+        <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+
+        <div class="command-input">
+            <div>
+                <input type="text" id="item" placeholder="Objeto">
+                <input type="number" id="price" placeholder="Precio">
+            </div>
+            <button onclick="addItem()">Añadir Objeto</button>
+            <button onclick="calculateTotal()">Resultados</button>
+        </div>
+        <ul id="item-list"></ul>
+    </main>
+    <footer>
+        <p>© 2024 Sumtask. Todos los derechos reservados.</p>
+    </footer>
+    <script>
+        let total = 0;
+
+        function addItem() {
+            const item = document.getElementById('item').value;
+            const price = parseFloat(document.getElementById('price').value);
+            
+            if (isNaN(price)) {
+                alert('Por favor ingresa un precio válido.');
+                return;
+            }
+            
+            total += price;
+            alert(`Se añadió "${item}" con precio $${price.toFixed(2)}.`);
+            document.getElementById('item').value = '';
+            document.getElementById('price').value = '';
+            
+            // Agregar el elemento a la lista
+            const itemList = document.getElementById('item-list');
+            const newItem = document.createElement('li');
+            newItem.textContent = `${item}: $${price.toFixed(2)}`;
+            itemList.appendChild(newItem);
+        }
+
+        function calculateTotal() {
+            if (total === 0) {
+                alert('Aún no has añadido ningún objeto.');
+            } else {
+                alert(`El total de todos los objetos es $${total.toFixed(2)}.`);
+            }
+        }
+        
+        function reproducirAudio() {
+  var audio = new Audio('salida.mp3');
+  audio.play();
+  audio.onended = function() {
+    window.location.href = 'index.html';
+  };
+}
+
+    </script>
+</body>
+</html>

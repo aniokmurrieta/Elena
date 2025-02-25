@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pics</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .command-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #canvas {
+            display: none;
+        }
+
+        #imagen {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+          #miBoton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: #800080;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; /* para hacerlo cuadrado, ajusta el valor según sea necesario */
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pics - Tomar y Descargar Fotos</h1>
+    </header>
+    <main>
+        <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+        <div class="command-input">
+            <button onclick="tomarFoto()">Tomar Foto</button>
+            <canvas id="canvas"></canvas>
+            <a id="descargarLink" download="foto.jpg" style="display: none">Descargar Foto</a>
+        </div>
+    </main>
+    <footer>
+        <p>© 2024 Pics</p>
+    </footer>
+
+    <script>
+        async function tomarFoto() {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const video = document.createElement('video');
+            video.srcObject = stream;
+            video.play();
+
+            video.addEventListener('loadedmetadata', () => {
+                const canvas = document.getElementById('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const context = canvas.getContext('2d');
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                const imagen = document.createElement('img');
+                imagen.src = canvas.toDataURL('image/jpeg');
+                imagen.id = 'imagen';
+                document.body.appendChild(imagen);
+
+                const descargarLink = document.getElementById('descargarLink');
+                descargarLink.href = imagen.src;
+                descargarLink.style.display = 'block';
+
+                // Detener el stream de la cámara
+                stream.getTracks().forEach(track => track.stop());
+            });
+        }
+        function reproducirAudio() {
+  var audio = new Audio('salida.mp3');
+  audio.play();
+  audio.onended = function() {
+    window.location.href = 'index.html';
+  };
+}
+
+    </script>
+</body>
+</html>

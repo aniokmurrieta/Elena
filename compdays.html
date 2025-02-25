@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompDays</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .command-input {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            gap: 10px;
+        }
+
+        .command-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .command-input button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+ #miBoton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: #800080;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; /* para hacerlo cuadrado, ajusta el valor según sea necesario */
+}
+
+
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CompDays</h1>
+    </header>
+    <main>
+        <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+
+        
+            
+        <div class="command-input">
+            <p>Ingrese las fechas a comparar:</p>
+            <label for="date1">Fecha 1:</label>
+            <input type="datetime-local" id="date1">
+            <label for="date2">Fecha 2:</label>
+            <input type="datetime-local" id="date2">
+            <button onclick="compareDates()">Comparar</button>
+            <h2>Resultado:</h2>
+            <p id="result"></p>
+        </div>
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 CompDays</p>
+    </footer>
+    <script>
+        function compareDates() {
+            const date1 = new Date(document.getElementById('date1').value);
+            const date2 = new Date(document.getElementById('date2').value);
+
+            if (isNaN(date1) || isNaN(date2)) {
+                document.getElementById('result').innerText = "Por favor, ingrese fechas válidas.";
+                return;
+            }
+
+            let years = date2.getFullYear() - date1.getFullYear();
+            let months = date2.getMonth() - date1.getMonth();
+            let days = date2.getDate() - date1.getDate();
+            let hours = date2.getHours() - date1.getHours();
+            let minutes = date2.getMinutes() - date1.getMinutes();
+
+            if (minutes < 0) {
+                minutes += 60;
+                hours--;
+            }
+            if (hours < 0) {
+                hours += 24;
+                days--;
+            }
+            if (days < 0) {
+                const prevMonth = new Date(date2.getFullYear(), date2.getMonth(), 0);
+                days += prevMonth.getDate();
+                months--;
+            }
+            if (months < 0) {
+                months += 12;
+                years--;
+            }
+
+            document.getElementById('result').innerText = 
+                `${years} años, ${months} meses, ${days} días, ${hours} horas, ${minutes} minutos`;
+        }
+        <!--xd--> 
+    function reproducirAudio() {
+  var audio = new Audio('salida.mp3');
+  audio.play();
+  audio.onended = function() {
+    window.location.href = 'index.html';
+  };
+}
+
+   
+    </script>
+</body>
+</html>

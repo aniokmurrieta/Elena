@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasking</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #800080; /* Color morado */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .task-input {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .task-input input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .task-input button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #800080; /* Color morado */
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .task-input button:hover {
+            background-color: #6c006c;
+        }
+
+        .task-list {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .task-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .task-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .task-list li.completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .task-list button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .task-list button:hover {
+            background-color: darkred;
+        }
+
+        footer {
+            background-color: #800080; /* Color morado */
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        #miBoton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            background-color: #800080;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tasking</h1>
+    </header>
+    <main>
+        <button id="miBoton" onclick="reproducirAudio()">Inicio</button>
+        <div class="task-input">
+            <input type="text" id="taskInput" placeholder="Escribe tu tarea aquí...">
+            <button id="addTaskButton">Agregar Tarea</button>
+        </div>
+        <div class="task-list">
+            <ul id="taskList"></ul>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Tasking</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const taskInput = document.getElementById("taskInput");
+            const addTaskButton = document.getElementById("addTaskButton");
+            const taskList = document.getElementById("taskList");
+
+            // Agregar tarea
+            function addTask() {
+                const taskText = taskInput.value.trim();
+                if (taskText === "") {
+                    alert("Por favor, escribe una tarea.");
+                    return;
+                }
+
+                const li = document.createElement("li");
+
+                const taskSpan = document.createElement("span");
+                taskSpan.textContent = taskText;
+                taskSpan.addEventListener("click", () => {
+                    li.classList.toggle("completed");
+                });
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Eliminar";
+                deleteButton.addEventListener("click", () => {
+                    taskList.removeChild(li);
+                });
+
+                li.appendChild(taskSpan);
+                li.appendChild(deleteButton);
+                taskList.appendChild(li);
+
+                taskInput.value = "";
+            }
+
+            addTaskButton.addEventListener("click", addTask);
+            taskInput.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") {
+                    addTask();
+                }
+            });
+        });
+
+        function reproducirAudio() {
+  var audio = new Audio('salida.mp3');
+  audio.play();
+  audio.onended = function() {
+    window.location.href = 'index.html';
+  };
+        }
+    </script>
+</body>
+</html>

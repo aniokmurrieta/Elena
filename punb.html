@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Punb</title>
+  <style>
+    .container {
+      text-align: center;
+    }
+
+    #content {
+      margin-top: 20px;
+    }
+
+    #savedContent {
+      list-style: none;
+      padding: 0;
+    }
+
+    #savedContent li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Punb</h1>
+    <input type="password" id="password" placeholder="Contraseña">
+    <button onclick="checkPassword()">Entrar</button>
+    <div id="content" style="display: none;">
+      <input type="text" id="linkInput" placeholder="Añadir link o nombre">
+      <button onclick="saveToLocal()">Guardar</button>
+      <ul id="savedContent"></ul>
+    </div>
+  </div>
+  <a href="index.html">inicio</a>
+  <script>
+    function checkPassword() {
+      var password = document.getElementById("password").value;
+      if (password === "secret") {
+        document.getElementById("content").style.display = "block";
+        showSavedContent();
+      } else {
+        alert("Contraseña incorrecta");
+      }
+    }
+
+    function saveToLocal() {
+      var link = document.getElementById("linkInput").value;
+      var savedContent = JSON.parse(localStorage.getItem("savedContent")) || [];
+      savedContent.push(link);
+      localStorage.setItem("savedContent", JSON.stringify(savedContent));
+      document.getElementById("linkInput").value = "";
+      showSavedContent();
+    }
+
+    function showSavedContent() {
+      var savedContent = JSON.parse(localStorage.getItem("savedContent")) || [];
+      var list = document.getElementById("savedContent");
+      list.innerHTML = "";
+      savedContent.forEach(function(item) {
+        var li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>

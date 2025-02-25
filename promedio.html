@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Personal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .aspect {
+            margin-bottom: 20px;
+        }
+        .aspect label {
+            font-weight: bold;
+        }
+        .description {
+            margin: 5px 0;
+            color: #555;
+        }
+        .detailed-description {
+            margin: 5px 0 10px;
+            font-size: 0.9em;
+            color: #777;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Evaluación Personal</h1>
+        <p>Evalúa los diferentes aspectos de tu vida asignando un valor entre 1 y 5 a cada uno.</p>
+        <div class="aspect">
+            <label for="carisma">Carisma:</label>
+            <input type="number" id="carisma" min="1" max="5" value="3">
+            <p class="description">Capacidad para conectar e influir en los demás.</p>
+            <p class="detailed-description">
+                1: Apenas logras conectar, poco atractivo socialmente. <br>
+                2: Dificultad para influir, atención ocasional. <br>
+                3: Carisma promedio, agradas en situaciones normales. <br>
+                4: Energía y actitud atractiva, destacas en grupos. <br>
+                5: Magnético, cautivas y lideras con facilidad.
+            </p>
+        </div>
+        <div class="aspect">
+            <label for="dinero">Dinero:</label>
+            <input type="number" id="dinero" min="1" max="5" value="3">
+            <p class="description">Situación económica y manejo de recursos.</p>
+            <p class="detailed-description">
+                1: Precaria, apenas cubres lo básico. <br>
+                2: Recursos limitados, dificultades ocasionales. <br>
+                3: Estabilidad financiera, estilo de vida promedio. <br>
+                4: Éxito financiero, disfrutas comodidades. <br>
+                5: Recursos abundantes, pocas preocupaciones.
+            </p>
+        </div>
+        <div class="aspect">
+            <label for="talento">Talento:</label>
+            <input type="number" id="talento" min="1" max="5" value="3">
+            <p class="description">Habilidades y competencias destacables.</p>
+            <p class="detailed-description">
+                1: Habilidades limitadas, sin área destacable. <br>
+                2: Ciertas habilidades útiles, requieren desarrollo. <br>
+                3: Competente en algunas áreas, habilidades notables. <br>
+                4: Talento claro, diferencias específicas. <br>
+                5: Excepcional, líder o experto en tu campo.
+            </p>
+        </div>
+        <div class="aspect">
+            <label for="inteligencia">Inteligencia:</label>
+            <input type="number" id="inteligencia" min="1" max="5" value="3">
+            <p class="description">Capacidad para entender conceptos y resolver problemas.</p>
+            <p class="detailed-description">
+                1: Dificultad para conceptos complejos. <br>
+                2: Comprendes lo básico, retos difíciles. <br>
+                3: Intelectualmente promedio, resuelves problemas comunes. <br>
+                4: Mente ágil y lógica, destacas en análisis. <br>
+                5: Intelecto sobresaliente, habilidades excepcionales.
+            </p>
+        </div>
+        <div class="aspect">
+            <label for="caracter">Carácter:</label>
+            <input type="number" id="caracter" min="1" max="5" value="3">
+            <p class="description">Firmeza y determinación para mantener principios.</p>
+            <p class="detailed-description">
+                1: Inconsistente y fácilmente influenciable. <br>
+                2: Cierta firmeza, pero cedes bajo presión. <br>
+                3: Carácter equilibrado con algunas dudas. <br>
+                4: Decidido e íntegro frente a desafíos. <br>
+                5: Inquebrantable, modelo de fortaleza moral.
+            </p>
+        </div>
+        <div class="aspect">
+            <label for="presencia">Presencia:</label>
+            <input type="number" id="presencia" min="1" max="5" value="3">
+            <p class="description">Capacidad de impactar visualmente y ser notado.</p>
+            <p class="detailed-description">
+                1: Pasas desapercibido en la mayoría de las situaciones. <br>
+                2: Presencia limitada con ocasionales destellos. <br>
+                3: Presencia promedio con impacto moderado. <br>
+                4: Impactas visual y actitudinalmente. <br>
+                5: Imponente, dominando el entorno.
+            </p>
+        </div>
+        <div class="aspect">
+            <label for="fisico">Físico:</label>
+            <input type="number" id="fisico" min="1" max="5" value="3">
+            <p class="description">Estado físico y apariencia general.</p>
+            <p class="detailed-description">
+                1: Débil o descuidado, afecta tu salud. <br>
+                2: Forma física por debajo del estándar saludable. <br>
+                3: Apariencia promedio sin aspectos destacables. <br>
+                4: Atractivo y saludable, resalta en muchas situaciones. <br>
+                5: Impresionante, reflejando disciplina y belleza sobresaliente.
+            </p>
+        </div>
+        <div class="aspect">
+            <label for="vestimenta">Vestimenta:</label>
+            <input type="number" id="vestimenta" min="1" max="5" value="3">
+            <p class="description">Estilo y adecuación de tu forma de vestir.</p>
+            <p class="detailed-description">
+                1: Descuidada, desordenada o inapropiada. <br>
+                2: Adecuada ocasionalmente, poco estilosa. <br>
+                3: Estilo aceptable y adaptado a situaciones comunes. <br>
+                4: Elegante y refleja buen gusto regularmente. <br>
+                5: Impecable, adaptado a cualquier ocasión.
+            </p>
+        </div>
+        <div class="aspect">
+            <label for="forma_de_hablar">Forma de Hablar:</label>
+            <input type="number" id="forma_de_hablar" min="1" max="5" value="3">
+            <p class="description">Claridad y efectividad al comunicarte.</p>
+            <p class="detailed-description">
+                1: Expresión confusa o desagradable. <br>
+                2: Básica con dificultades para captar atención. <br>
+                3: Clara y promedio, comunica ideas. <br>
+                4: Efectiva y cautiva a quienes te escuchan. <br>
+                5: Elocuente y con autoridad, deja impacto positivo.
+            </p>
+        </div>
+        <div class="aspect">
+            <label for="amistades">Amistades:</label>
+            <input type="number" id="amistades" min="1" max="5" value="3">
+            <p class="description">Calidad y cantidad de tus relaciones sociales.</p>
+            <p class="detailed-description">
+                1: Pocas o ninguna relación social significativa. <br>
+                2: Amistades ocasionales, red poco sólida. <br>
+                3: Red de amistades promedio y confiable. <br>
+                4: Amplio círculo cercano y constante apoyo. <br>
+                5: Relaciones sólidas, influyentes y valiosas.
+            </p>
+        </div>
+        <button onclick="calcularValor()">Calcular Valor</button>
+        <div id="resultado" class="result"></div>
+    </div>
+    <div><a href="index.html">volver</a></div>
+    <script>
+        function calcularValor() {
+            const aspectos = [
+                'carisma',
+                'dinero',
+                'talento',
+                'inteligencia',
+                'caracter',
+                'presencia',
+                'fisico',
+                'vestimenta',
+                'forma_de_hablar',
+                'amistades'
+            ];
+            let total = 0;
+            let valid = true;
+
+            aspectos.forEach(id => {
+                const valor = parseInt(document.getElementById(id).value);
+                if (valor < 1 || valor > 5 || isNaN(valor)) {
+                    valid = false;
+                    alert(`Por favor, ingresa un valor entre 1 y 5 para ${id.replace('_', ' ')}.`);
+                }
+                total += valor;
+            });
+
+            if (valid) {
+                const promedio = total / aspectos.length;
+                const resultado = document.getElementById('resultado');
+                resultado.textContent = `Tu valor promedio como persona es: ${promedio.toFixed(2)} de 5.`;
+            }
+        }
+    </script>
+</body>
+</html>
